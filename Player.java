@@ -30,6 +30,20 @@ public class Player extends GameObject
 		// Update player's x & y coordinates
 		x += velocity_x;
 		y += velocity_y;
+		
+		// Prevent player from going over window barriers
+//		if (x <= 0 || x >= Game.WIDTH)
+//		{
+//			velocity_x *= -1;
+//		}
+//		
+//		if (y <= 0 || y >= Game.HEIGHT)
+//		{
+//			velocity_y *= -1;
+//		}
+		
+		x = Game.clamp(x,  0, Game.WIDTH - 32);
+		y = Game.clamp(y, 0, Game.HEIGHT - 73);
 	}
 
 	@Override
@@ -43,5 +57,5 @@ public class Player extends GameObject
 		g.setColor(Color.white); // Give player (object) a color
 		g.fillRect(x, y, 32, 32); // Specify player's (object) dimension
 	}
-
+	
 }

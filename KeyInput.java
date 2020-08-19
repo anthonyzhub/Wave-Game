@@ -52,6 +52,14 @@ public class KeyInput extends KeyAdapter
 				}
 			}
 		}
+		
+		// Exit program, if ESC key was pressed.
+		// This is not part of GameObject and a specific object doesn't need to have this configuration,
+		// so I am adding an if-statement outside the for-loop
+		if (key == KeyEvent.VK_ESCAPE)
+		{
+			System.exit(1);
+		}
 	}
 	
 	public void keyReleased(KeyEvent e)

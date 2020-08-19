@@ -11,6 +11,7 @@ public class Game extends Canvas implements Runnable
 	private boolean isRunning = false;
 	private Handler handler;
 	private Random r;
+	private HUD hud;
 
 	// Specify window's width and height. By adding " * 9", the window will have a 16:9 ratio.
 	public static final int WIDTH = 640;
@@ -30,10 +31,16 @@ public class Game extends Canvas implements Runnable
 		new Window(WIDTH, HEIGHT, "Game Title", this); // "this" refers the class
 		
 		// Create a new instance of Random
-		r = new Random();
+//		r = new Random();
+		
+		// Create a new instance of HUD
+		hud = new HUD();
 		
 		// Add player (object) to window
 		handler.addObject(new Player(100, 100, Object_ID.Player));
+		
+		// Add BasicEnemy (object) to window
+		handler.addObject(new BasicEnemy(150, 150, Object_ID.BasicEnemy));
 	}
 	
 	public void callMessage(String msg)
@@ -82,6 +89,7 @@ public class Game extends Canvas implements Runnable
 		callMessage("Game's tick func!");
 		
 		handler.tick();
+		hud.tick();
 	}
 	
 	private void render()
@@ -109,6 +117,7 @@ public class Game extends Canvas implements Runnable
 		window_graphics.fillRect(0, 0, WIDTH, HEIGHT);
 		
 		handler.render(window_graphics);
+		hud.render(window_graphics);
 		
 		window_graphics.dispose(); // Remove graphics from window and release resources
 		buff.show(); // Make next available buffer visible
@@ -122,14 +131,18 @@ public class Game extends Canvas implements Runnable
 		// Function call
 		callMessage("Game's run func!");
 		
+		// Automatically accepts keyboard input without needing to click on window
+		this.requestFocus();
+		
 		long lastTime = System.nanoTime(); // Get current time
-		long timer = System.currentTimeMillis(); // Start timer
 		
 		double amountOfTicks = 60.0; // 60 FPS
-		double ns = 100_000_000 / amountOfTicks; // Time until new screen (frame) is loaded
+		double ns = 1_000_000_000 / amountOfTicks; // Time until new screen (frame) is loaded
 		double delta = 0;
 		
-		int frames = 0;
+		long timer = System.currentTimeMillis(); // Start timer
+		
+		int frames = 0; // Keep track of how many frames there are
 		
 		while (isRunning) // Check if thread is created and being used
 		{
@@ -153,7 +166,7 @@ public class Game extends Canvas implements Runnable
 			// Print new frame every 1,000 seconds
 			if (System.currentTimeMillis() - timer > 1_000)
 			{
-				timer += 1000;
+				timer += 1_000;
 //				System.out.printf("FPS: %d%n", frames);
 				frames = 0;
 			}
@@ -161,6 +174,27 @@ public class Game extends Canvas implements Runnable
 		
 		// Stop game from running
 		stop();
+	}
+	
+	public static int clamp(int var, int min, int max)
+	{
+		// OBJECTIVE: Return updated X or Y position to the player
+		
+		if (var >= max)
+		{
+			// If X or Y position is above their maximum, return max
+			return max;
+		}
+		else if (var <= min)
+		{
+			// If X or Y position is below their minimum, return min
+			return min;
+		}
+		else
+		{
+			// Don't make changes. Return incoming variable
+			return var;
+		}
 	}
 	
 	public static void main(String[] args) {
