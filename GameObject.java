@@ -25,7 +25,7 @@ public abstract class GameObject
 		// OBJECTIVE: Class constructor
 		
 		// System call
-		System.out.printf("Calling from GameObject's Constructor func!%n");
+//		System.out.printf("Calling from GameObject's Constructor func!%n");
 		
 		// Set variable's value
 		x = new_x;
@@ -37,53 +37,53 @@ public abstract class GameObject
 	public abstract void render(Graphics g);
 	
 	// ===== Setter and Getter methods ===== 
-//	public void setX(int x)
-//	{
-//		this.x = x;
-//	}
-//	
-//	public int getX()
-//	{
-//		return x;
-//	}
-//	
-//	public void setY(int y)
-//	{
-//		this.y = y;
-//	}
-//	
-//	public int getY()
-//	{
-//		return y;
-//	}
-//	
-//	public void setID(Object_ID id)
-//	{
-//		this.id = id;
-//	}
-//	
-//	public Object_ID getID()
-//	{
-//		return id;
-//	}
-//	
-//	public void setVelocityX(int velocity_x)
-//	{
-//		this.velocity_x = velocity_x;
-//	}
-//	
-//	public int getVelocityX()
-//	{
-//		return velocity_x;
-//	}
-//	
-//	public void setVelocityY(int velocity_y)
-//	{
-//		this.velocity_y = velocity_y;
-//	}
-//	
-//	public int getVelocityY()
-//	{
-//		return velocity_y;
-//	}
+	public void setX(int x)
+	{
+		this.x = x;
+	}
+	
+	public int getX()
+	{
+		return x;
+	}
+	
+	public void setY(int y)
+	{
+		this.y = y;
+	}
+	
+	public int getY()
+	{
+		return y;
+	}
+	
+	public void setID(Object_ID id)
+	{
+		this.id = id;
+	}
+	
+	public Object_ID getID()
+	{
+		return id;
+	}
+	
+	public void setVelocityX(int velocity_x)
+	{
+		this.velocity_x = velocity_x;
+	}
+	
+	public int getVelocityX()
+	{
+		return velocity_x;
+	}
+	
+	public void setVelocityY(int velocity_y)
+	{
+		this.velocity_y = velocity_y;
+	}
+	
+	public int getVelocityY()
+	{
+		return velocity_y;
+	}
 }

@@ -12,13 +12,11 @@ public class Player extends GameObject
 		// This came be default because it is a child of GameObject class
 		super(x, y, id);
 		
-		// Give player a starting value for movement
-		velocity_x = 10;
 	}
 	
 	public void callMessage(String s)
 	{
-		System.out.printf("Calling from: %s%n", s);
+//		System.out.printf("Calling from: %s%n", s);
 	}
 
 	@Override
