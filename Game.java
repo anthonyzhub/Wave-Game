@@ -2,12 +2,15 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
+//import java.util.Random;
 
 public class Game extends Canvas implements Runnable
 {
 	private static final long serialVersionUID = 1L; // This comes from Canvas
 	private Thread thread; // Create a thread. The entire game will run on this entire thread (not recommended...)
 	private boolean isRunning = false;
+	private Handler handler;
+//	private Random r;
 
 	// Specify window's width and height. By adding " * 9", the window will have a 16:9 ratio.
 	public static final int WIDTH = 640;
@@ -16,14 +19,36 @@ public class Game extends Canvas implements Runnable
 	public Game()
 	{
 		// OBJECTIVE: Class's constructor
+		
+		// Create a new window with specified weight, height, window this, and GameObject
 		new Window(WIDTH, HEIGHT, "Game Title", this); // "this" refers the class
+		
+		// Create a new instance of Handler
+		handler = new Handler();
+		
+		// Create a new instance of Random
+//		r = new Random();
+		
+		// Automatically add 3 new players (objects) to window with random x and y coordinate
+//		for (int i=0; i<30; i++) {handler.addObject(new Player(r.nextInt(WIDTH), r.nextInt(HEIGHT), Object_ID.Player));}
+		
+		// Add player (object) to window
+		handler.addObject(new Player(100, 100, Object_ID.Player));
+	}
+	
+	public void callMessage(String msg)
+	{
+		System.out.printf("Calling from: %s%n", msg);
 	}
 
 	public synchronized void start()
 	{
 		// OBJECTIVE: To initialize a thread for the game to start
 		
-		// Initialize a previously created thread
+		// Function call
+		callMessage("Game's start func!");
+		
+		// Initialize a thread
 		thread = new Thread(this); // This refers to thread that was created above
 		thread.start();
 		
@@ -34,6 +59,9 @@ public class Game extends Canvas implements Runnable
 	public synchronized void stop()
 	{
 		// OBJECTIVE: To stop a game from running
+		
+		// Function call
+		callMessage("Game's stop func!");
 		
 		try
 		{
@@ -50,12 +78,18 @@ public class Game extends Canvas implements Runnable
 	
 	private void tick()
 	{
+		// Function call
+		callMessage("Game's tick func!");
 		
+		handler.tick();
 	}
 	
 	private void render()
 	{
 		// OBJECTIVE: Manages window rendering
+		
+		// Function call
+		callMessage("Game's render func!");
 		
 		// BufferStrategy handles memory for windows and canvases
 		BufferStrategy buff = this.getBufferStrategy();
@@ -67,14 +101,16 @@ public class Game extends Canvas implements Runnable
 			return; // Return nothing
 		}
 		
-		// Change background (sort of)
-		Graphics display = buff.getDrawGraphics();
+		// Handle window's graphics
+		Graphics window_graphics = buff.getDrawGraphics();
 		
 		// Set background to black and specify where in the rectangular window to spread it
-		display.setColor(Color.black);
-		display.fillRect(0, 0, WIDTH, HEIGHT);
+		window_graphics.setColor(Color.black);
+		window_graphics.fillRect(0, 0, WIDTH, HEIGHT);
 		
-		display.dispose(); // Remove graphics from window and release resources
+		handler.render(window_graphics);
+		
+		window_graphics.dispose(); // Remove graphics from window and release resources
 		buff.show(); // Make next available buffer visible
 	}
 	
@@ -82,6 +118,9 @@ public class Game extends Canvas implements Runnable
 	public void run() 
 	{
 		// OBJECTIVE: Calculate FPS of computer screen
+		
+		// Function call
+		callMessage("Game's run func!");
 		
 		long lastTime = System.nanoTime(); // Get current time
 		long timer = System.currentTimeMillis(); // Start timer
