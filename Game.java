@@ -2,7 +2,7 @@ import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
-//import java.util.Random;
+import java.util.Random;
 
 public class Game extends Canvas implements Runnable
 {
@@ -10,7 +10,7 @@ public class Game extends Canvas implements Runnable
 	private Thread thread; // Create a thread. The entire game will run on this entire thread (not recommended...)
 	private boolean isRunning = false;
 	private Handler handler;
-//	private Random r;
+	private Random r;
 
 	// Specify window's width and height. By adding " * 9", the window will have a 16:9 ratio.
 	public static final int WIDTH = 640;
@@ -20,17 +20,17 @@ public class Game extends Canvas implements Runnable
 	{
 		// OBJECTIVE: Class's constructor
 		
-		// Create a new window with specified weight, height, window this, and GameObject
-		new Window(WIDTH, HEIGHT, "Game Title", this); // "this" refers the class
-		
 		// Create a new instance of Handler
 		handler = new Handler();
 		
-		// Create a new instance of Random
-//		r = new Random();
+		// Create a new instance of KeyInput to lookout for any keys that are pressed
+		this.addKeyListener(new KeyInput(handler));
 		
-		// Automatically add 3 new players (objects) to window with random x and y coordinate
-//		for (int i=0; i<30; i++) {handler.addObject(new Player(r.nextInt(WIDTH), r.nextInt(HEIGHT), Object_ID.Player));}
+		// Create a new window with specified weight, height, window this, and GameObject
+		new Window(WIDTH, HEIGHT, "Game Title", this); // "this" refers the class
+		
+		// Create a new instance of Random
+		r = new Random();
 		
 		// Add player (object) to window
 		handler.addObject(new Player(100, 100, Object_ID.Player));
@@ -38,7 +38,7 @@ public class Game extends Canvas implements Runnable
 	
 	public void callMessage(String msg)
 	{
-		System.out.printf("Calling from: %s%n", msg);
+//		System.out.printf("Calling from: %s%n", msg);
 	}
 
 	public synchronized void start()
@@ -126,7 +126,7 @@ public class Game extends Canvas implements Runnable
 		long timer = System.currentTimeMillis(); // Start timer
 		
 		double amountOfTicks = 60.0; // 60 FPS
-		double ns = 100_000_000; // Time until new screen (frame) is loaded
+		double ns = 100_000_000 / amountOfTicks; // Time until new screen (frame) is loaded
 		double delta = 0;
 		
 		int frames = 0;
@@ -154,7 +154,7 @@ public class Game extends Canvas implements Runnable
 			if (System.currentTimeMillis() - timer > 1_000)
 			{
 				timer += 1000;
-				System.out.printf("FPS: %d%n", frames);
+//				System.out.printf("FPS: %d%n", frames);
 				frames = 0;
 			}
 		}

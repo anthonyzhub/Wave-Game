@@ -10,7 +10,7 @@ public class Handler {
 	
 	public void callMessage(String s)
 	{
-		System.out.printf("Calling from: %s%n", s);
+//		System.out.printf("Calling from: %s%n", s);
 	}
 	
 	public void tick()
